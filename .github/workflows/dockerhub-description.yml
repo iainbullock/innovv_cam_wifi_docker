@@ -17,6 +17,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: iainbullock/innovv_cam_wifi_docker
+        repository: iainbullock/innovv_cam_wifi
         short-description: ${{ github.event.repository.description }}
         enable-url-completion: true
