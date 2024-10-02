@@ -2,7 +2,7 @@ FROM alpine:3.20.2
 
 # install dependencies
 RUN apk update && apk add --no-cache \
-  hostapd iw dhcp iptables envsubst
+  wireless-tools
 
 # Copy configs and scripts
 RUN mkdir /conf /app /run/dhcp
