@@ -1,16 +1,16 @@
 volumes:
-  innovv-cam-wifi:
+  innovv_cam_wifi:
     external: true
     
 services:
-  innovv-cam-wifi:
+  innovv_cam_wifi:
     # Uncomment one of these. Use :latest if you want the stable build, use :dev if you want the development build
-    image: iainbullock/innovv-cam-wifi:latest
+    image: iainbullock/innovv_cam_wifi:latest
     #image: iainbullock/innovv-cam-wifi:dev
-    container_name: innovv-cam-wifid
+    container_name: innovv_cam_wifi
    
     volumes:
-      - innovv-cam-wifi:/config
+      - innovv_cam_wifi:/config
     
     network_mode: host
     
