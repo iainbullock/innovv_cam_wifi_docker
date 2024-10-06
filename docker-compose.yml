@@ -13,14 +13,7 @@ services:
       - innovv_cam_wifi:/config
     
     network_mode: host
-    
-    cap_add:
-      - NET_ADMIN
-
-    environment:
-      - AP_IFACE=wlan0
-      - UPLINK_IFACE=eth0
-      
+         
     # Allow opening of a shell in container
     tty: true
     stdin_open: true    
