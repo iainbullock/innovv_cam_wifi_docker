@@ -2,7 +2,7 @@
 export DEBUG=${DEBUG:-false}
 
 # Setup logging and validate environment variables
-echo "[$(date +%H:%M:%S)] loading libproduct.sh"
+echo "[$(date +%H:%M:%S)] Loading libproduct.sh"
 . /app/libproduct.sh
 
 # Load functions
