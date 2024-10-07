@@ -15,8 +15,9 @@ function validateEnvVars() {
 
 }
 
+# Setup logging
 export COLOR=${COLOR:=true}
-# Source Logging Library
 . /app/liblog.sh
 
+# Validate environment variables
 validateEnvVars
