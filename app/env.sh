@@ -23,7 +23,8 @@ log_info "Configuration Options are:
   DEBUG=$DEBUG
   WLAN_CONNECT=$WLAN_CONNECT"
 
-[ -n "$WLAN_CONNECT" ] && log_info "  WLAN_INTERFACE=$WLAN_INTERFACE"; \
-log_info "  WLAN_NAME=$WLAN_NAME"; \
-log_info "  WLAN_PASSWORD=$WLAN_PASSWORD"; \
-log_info "  WLAN_DRIVER=$WLAN_DRIVER"
+[ -n "$WLAN_CONNECT" ] && log_info "
+    WLAN_INTERFACE=$WLAN_INTERFACE
+    WLAN_NAME=$WLAN_NAME
+    WLAN_PASSWORD=$WLAN_PASSWORD
+    WPA_DRIVER=$WPA_DRIVER"
