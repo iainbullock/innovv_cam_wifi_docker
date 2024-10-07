@@ -1,6 +1,7 @@
 # Load Functions
 echo "[$(date +%H:%M:%S)] loading libproduct.sh"
 . /app/libproduct.sh
+
 log_debug "Loading functions..."
 for fSource in subroutines.sh \
   version.sh; do
@@ -16,10 +17,12 @@ done
 # Initialise environment with default value if empty string is provided
 export DEBUG=${DEBUG:-false}
 
-### LOG CONFIG VARS ###########################################################
+# Log Config Variables
 log_info "Configuration Options are:
   DEBUG=$DEBUG
-  "
+  WLAN_CONNECT=$WLAN_CONNECT"
 
-[ -n "$ENABLE_HA_FEATURES" ] && log_info "  ENABLE_HA_FEATURES=$ENABLE_HA_FEATURES"
-[ -n "$BLECTL_FILE_INPUT" ] && log_info "  BLECTL_FILE_INPUT=$BLECTL_FILE_INPUT"
+[ -n "$WLAN_CONNECT" ] && log_info "  WLAN_INTERFACE=$WLAN_INTERFACE"; \
+log_info "  WLAN_NAME=$WLAN_NAME"; \
+log_info "  WLAN_PASSWORD=$WLAN_PASSWORD"; \
+log_info "  WLAN_DRIVER=$WLAN_DRIVER"
