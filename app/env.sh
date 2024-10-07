@@ -1,7 +1,8 @@
-# Load Functions
+# Setup logging and validate environment variables
 echo "[$(date +%H:%M:%S)] loading libproduct.sh"
 . /app/libproduct.sh
 
+# Load functions
 log_debug "Loading functions..."
 for fSource in subroutines.sh \
   version.sh; do
@@ -14,7 +15,7 @@ for fSource in subroutines.sh \
   fi
 done
 
-# Initialise environment with default value if empty string is provided
+# Initialise Config Variable defaults
 export DEBUG=${DEBUG:-false}
 
 # Log Config Variables
