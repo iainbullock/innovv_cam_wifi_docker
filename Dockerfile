@@ -5,9 +5,8 @@ RUN apk update && apk add --no-cache \
   wireless-tools
 
 # Copy configs and scripts
-RUN mkdir /conf /app
-ADD conf/* /conf
-ADD app/* /app
+COPY conf/* /conf/
+COPY app liblog.sh libproduct.sh /app/
 RUN chmod +x /app/start.sh
 
 CMD [ "/app/start.sh" ]
