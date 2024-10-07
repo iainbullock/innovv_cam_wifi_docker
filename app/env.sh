@@ -1,3 +1,6 @@
+# Initialise config variable defaults
+export DEBUG=${DEBUG:-false}
+
 # Setup logging and validate environment variables
 echo "[$(date +%H:%M:%S)] loading libproduct.sh"
 . /app/libproduct.sh
@@ -14,9 +17,6 @@ for fSource in subroutines.sh \
     exit 10
   fi
 done
-
-# Initialise Config Variable defaults
-export DEBUG=${DEBUG:-false}
 
 # Log Config Variables
 log_info "Configuration Options are:
