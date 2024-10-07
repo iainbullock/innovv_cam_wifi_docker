@@ -9,6 +9,9 @@ echo "Loading /app/env.sh"
 log_info "Listing wireless interfaces:
   `iwconfig 2>/dev/null`"
 
+# Setup wifi if required
+[ -n "$WLAN_CONNECT" ] && setup_wifi
+
 # Start main program loop
 log_info "Entering main loop..."
 while :; do
