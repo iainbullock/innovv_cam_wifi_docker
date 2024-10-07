@@ -2,7 +2,8 @@ FROM alpine:3.20.2
 
 # install dependencies
 RUN apk update && apk add --no-cache \
-  wireless-tools
+  wireless-tools \
+  wpa_supplicant
 
 # Copy configs and scripts
 COPY conf/* /conf/
