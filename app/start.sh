@@ -5,8 +5,9 @@ echo "[$(date +%H:%M:%S)] Starting..."
 echo "Loading /app/env.sh"
 . /app/env.sh
 
-# View Interfaces
-iwconfig 2>/dev/null | cat
+# List Wireless Interfaces
+log_info "Listing wireless interfaces:"
+iwconfig 2>/dev/null | log_info
 
 # Start main program loop
 log_info "Entering main loop..."
