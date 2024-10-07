@@ -5,6 +5,8 @@ function setup_wifi() {
   log_info "Scanning wifi:
   `iwlist $WLAN_INTERFACE s | grep 'Cell\|Quality\|ESSID\|IEEE'`"
 
-  # 
+  # Create file containing username and password for the wifi AP
   echo $WLAN_PASSWORD | wpa_passphrase $WLAN_NAME > /config/wpa_supplicant.conf
+
+  
 }
