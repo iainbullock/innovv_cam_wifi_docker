@@ -15,6 +15,12 @@ log_info "Listing wireless interfaces:\
 # Start main program loop
 log_info "Entering main loop..."
 while :; do
-  sleep 1
+  log_debug "Output from ipconfig: \
+  `ipconfig $WLAN_INTERFACE`"
+
+  log_debug "Output from iwconfig: \
+  `iwconfig $WLAN_INTERFACE`" 
+
+  sleep 5
   log_debug "  Next Loop..."
 done
