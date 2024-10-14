@@ -16,5 +16,5 @@ log_info "Listing wireless interfaces:
 log_info "Entering main loop..."
 while :; do
   sleep 1
-  log_info "  Next Loop..."
+  log_debug "  Next Loop..."
 done
