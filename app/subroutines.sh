@@ -14,7 +14,7 @@ function setup_wifi() {
 
   # Listen for and connect to wifi whenever it is in range (process runs in background)
   log_info "Listen for and then connect to wifi:
-  `wpa_supplicant -B -i $WLAN_INTERFACE -c /etc/wpa_supplicant.conf -D $WPA_DRIVER`"
+  `wpa_supplicant -B -i $WLAN_INTERFACE -c /config/wpa_supplicant.conf -D $WPA_DRIVER`"
 
   # Get IP address from device (process runs in background)
   log_info "Get IP address from device:
