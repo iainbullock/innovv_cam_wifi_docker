@@ -6,7 +6,7 @@ echo "Loading /app/env.sh"
 . /app/env.sh
 
 # List Wireless Interfaces
-log_info "Listing wireless interfaces:
+log_info "Listing wireless interfaces:\
   `iwconfig 2>/dev/null`"
 
 # Setup wifi if required
