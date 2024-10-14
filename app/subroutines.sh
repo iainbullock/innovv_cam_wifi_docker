@@ -11,7 +11,7 @@ function setup_wifi() {
 
   # Create file containing username and password for the wifi AP
   log_info "Creating wpa_supplicant.conf: \
-  echo $WLAN_PASSWORD | wpa_passphrase $WLAN_NAME > /config/wpa_supplicant.conf
+  `echo $WLAN_PASSWORD | wpa_passphrase $WLAN_NAME > /config/wpa_supplicant.conf`"
 
   # Listen for and connect to wifi whenever it is in range (process runs in background)
   log_info "Listen for and then connect to wifi: \
