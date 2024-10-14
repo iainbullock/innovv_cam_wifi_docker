@@ -16,7 +16,7 @@ function setup_wifi() {
   log_info "Listen for and then connect to wifi:
   `wpa_supplicant -B -i $WLAN_INTERFACE -c /config/wpa_supplicant.conf -D $WPA_DRIVER`"
 
-  # Get IP address from device (process runs in background)
-  log_info "Get IP address from device:
+  # Get IP address from device via dhcp (process runs in background)
+  log_info "Get IP address from device via dhcp:
   `dhclient $WLAN_INTERFACE`"  
 }
