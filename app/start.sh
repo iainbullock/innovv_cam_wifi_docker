@@ -19,8 +19,15 @@ while :; do
   `ifconfig $WLAN_INTERFACE`"
 
   log_debug "Output from iwconfig: 
-  `iwconfig $WLAN_INTERFACE`" 
-
+  `iwconfig $WLAN_INTERFACE`"
+  
+  # Check if wifi is associated
+  if [[ `iwconfig $WLAN_INTERFACE | grep -c ESSID:\"$WLAN_NAME\"` -eq 0 ]]; then
+    log_info "Wifi not associated"
+  else
+    log_info "Wifi associated, SSID is $WLAN_NAME"
+  fi
+  
   sleep 5
   log_debug "  Next Loop..."
 done
