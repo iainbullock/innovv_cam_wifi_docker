@@ -5,6 +5,7 @@ RUN apk update && apk add --no-cache \
   wireless-tools \
   wpa_supplicant \
   dhclient \
+  iptables \
   curl
 
 # Copy configs and scripts

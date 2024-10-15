@@ -12,6 +12,12 @@ log_info "Listing wireless interfaces:
 # Setup wifi if required
 [ -n "$WLAN_CONNECT" ] && setup_wifi
 
+# Create folder for camera files
+[ -d /config/$CAM_NAME ] || mkdir /config/$CAM_NAME
+
+# Setup firewall rules to allow routing to camera device
+setup_firewall
+
 # Start main program loop
 log_info "Entering main loop..."
 while :; do

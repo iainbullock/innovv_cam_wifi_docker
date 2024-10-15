@@ -23,3 +23,20 @@ function setup_wifi() {
   log_info "Get IP address from device via dhcp...\
   `dhclient $WLAN_INTERFACE`"  
 }
+
+function setup_firewall() {
+  # Set up firewall to allow routing to / from camera device
+  log_debug "Setting up firewall rules. Ignore messages like iptables: Bad rule (does a matching rule exist in that chain?)..."
+  iptables-nft -C FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT
+  iptables-nft -C FORWARD -i $WLAN_INTERFACE -j ACCEPT || iptables-nft -A FORWARD -i $WLAN_INTERFACE -j ACCEPT
+  iptables-nft -C FORWARD -p icmp -j ACCEPT || iptables-nft -A FORWARD -p icmp -j ACCEPT  
+}
+
+function restore_firewall() {
+  # Remove firewall rules which were added to allow routing to / from camera device
+  log_debug "Restoring firewall rules..."
+  iptables-nft -C FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT && iptables-nft -D FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT
+  iptables-nft -C FORWARD -i $WLAN_INTERFACE -j ACCEPT && iptables-nft -D FORWARD -i $WLAN_INTERFACE -j ACCEPT
+  iptables-nft -C FORWARD -p icmp -j ACCEPT && iptables-nft -D FORWARD -p icmp -j ACCEPT
+}
+

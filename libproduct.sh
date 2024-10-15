@@ -7,7 +7,7 @@ function validateEnvVars() {
   fi
 
   if [ $exitOnError -eq 0 ]; then
-    :
+    rm -f /config/.exitOnError
   else
     touch /config/.exitOnError
     exit 99
