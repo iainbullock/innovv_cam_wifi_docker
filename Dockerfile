@@ -4,8 +4,6 @@ FROM alpine:3.20.2
 RUN apk update && apk add --no-cache \
   wireless-tools \
   wpa_supplicant \
-  dhclient \
-  iptables \
   curl
 
 # Copy configs and scripts

@@ -11,6 +11,7 @@ services:
    
     volumes:
       - innovv_cam_wifi:/config
+      - innovv_cam_wifi:/data
     
     network_mode: host
 

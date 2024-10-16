@@ -31,3 +31,51 @@ function setup_wifi() {
 
 }
 
+function download() {
+  # curl should be quiet unless in debug mode
+  if [ $DEBUG != "true" ]; then
+    quiet_args="--no-progress-meter"
+  fi
+
+  echo "Downloading latest file list"
+  curl --output /data/$CAM_NAME/filelist $quiet_args "http://192.168.1.254/?custom=1&cmd=3015"
+  rv=$?
+  if [ $rv -ne 0 ]; then
+    echo "Downloading file list failed (error code $rv)"
+    rm -f /data/$CAM_NAME/filelist
+    exit 1
+  else
+    ls -al /data/$CAM_NAME/filelist
+  fi
+
+    # Get SD card volume name
+  volume_name=`cat /data/$CAM_NAME/filelist | grep -m 1 '<FPATH>A:' | cut -d '\' -f 2`
+  if [ ${#volume_name} -eq 0 ]; then
+    echo "Invalid SD card volume name: $volume_name"
+    exit 2
+  else
+    echo "SD Card volume name: $volume_name"
+  fi
+
+  echo "Searching for standard videos"
+  cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\$volume_name\\VIDEO' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r fi
+    echo -e Downloading video: $file
+    curl --output /data/$CAM_NAME/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
+    rv=$?
+    [ $rv -ne 0 ] && echo "Downloading video failed (error code $rv)" && rm -f /data/$CAM_NAME/$file && exit 3
+    if [ $rv -ne 0 ]; then
+      echo "Downloading video failed (error code $rv)"
+      rm -f /data/$CAM_NAME/$file
+      exit 3
+    else
+      ls -al /data/$CAM_NAME/$file
+    fi
+
+    echo "Deleting $file"
+    curl $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file?del=1"
+    rv=$?
+    echo -e Result was $rv
+
+done
+
+}
