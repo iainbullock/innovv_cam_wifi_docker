@@ -17,26 +17,14 @@ function setup_wifi() {
 
   # Listen for and connect to wifi whenever it is in range (process runs in background)
   log_info "Listen for and then connect to wifi: 
-  `wpa_supplicant -B -i $WLAN_INTERFACE -c /config/wpa_supplicant.conf -D $WPA_DRIVER`"
+  `wpa_supplicant -B -i $WLAN_INTERFACE -c /config/wpa_supplicant.conf`"
 
   # Get IP address from device via dhcp (process runs in background)
   log_info "Get IP address from device via dhcp...\
   `dhclient $WLAN_INTERFACE`"  
-}
 
-function setup_firewall() {
-  # Set up firewall to allow routing to / from camera device
-  log_debug "Setting up firewall rules. Ignore messages like iptables: Bad rule (does a matching rule exist in that chain?)..."
-  iptables-nft -C FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables-nft -A FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT
-  iptables-nft -C FORWARD -i $WLAN_INTERFACE -j ACCEPT || iptables-nft -A FORWARD -i $WLAN_INTERFACE -j ACCEPT
-  iptables-nft -C FORWARD -p icmp -j ACCEPT || iptables-nft -A FORWARD -p icmp -j ACCEPT  
-}
+  # Setup firewall rules to allow routing to camera device
+  # Routing doesn't seem possible, maybe the camera won't allow connections from outside its subnet?
 
-function restore_firewall() {
-  # Remove firewall rules which were added to allow routing to / from camera device
-  log_debug "Restoring firewall rules..."
-  iptables-nft -C FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT && iptables-nft -D FORWARD -o $WLAN_INTERFACE -m state --state RELATED,ESTABLISHED -j ACCEPT
-  iptables-nft -C FORWARD -i $WLAN_INTERFACE -j ACCEPT && iptables-nft -D FORWARD -i $WLAN_INTERFACE -j ACCEPT
-  iptables-nft -C FORWARD -p icmp -j ACCEPT && iptables-nft -D FORWARD -p icmp -j ACCEPT
 }
 
