@@ -59,7 +59,7 @@ function download() {
   fi
 
   log_info "Searching for standard videos"
-  cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\$volume_name\\VIDEO' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r; do
+  cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\VIDEO' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
     log_info "Downloading video: $file"
     curl --output /data/$CAM_NAME/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
     rv=$?
