@@ -44,10 +44,9 @@ function download() {
   rv=$?
   if [ $rv -ne 0 ]; then
     log_error "Downloading file list failed (error code $rv)"
-    rm -f /data/$CAM_NAME/filelist
     exit 1
   else
-    log_debug "`ls -al /data/$CAM_NAME/filelist`"
+    log_debug "`ls -hl /data/$CAM_NAME/filelist`"
   fi
 
     # Get SD card volume name
@@ -69,7 +68,7 @@ function download() {
       rm -f /data/$CAM_NAME/$file
       exit 3
     else
-      log_debug "`ls -al /data/$CAM_NAME/$file`"
+      log_debug "`ls -hl /data/$CAM_NAME/$file`"
     fi
 
     log_info "Deleting $file"
