@@ -49,7 +49,7 @@ function download() {
     rm -f /data/$CAM_NAME/filelist
     exit 1
   else
-    ls -al /data/$CAM_NAME/filelist
+    log_debug "`ls -al /data/$CAM_NAME/filelist`"
   fi
 
     # Get SD card volume name
@@ -58,7 +58,7 @@ function download() {
     log_error "Invalid SD card volume name: $volume_name"
     exit 2
   else
-    log_info "SD Card volume name: $volume_name"
+    log_debug "SD Card volume name: $volume_name"
   fi
 
   log_info "Searching for standard videos"
@@ -71,12 +71,18 @@ function download() {
       rm -f /data/$CAM_NAME/$file
       exit 3
     else
-      log_info "`ls -al /data/$CAM_NAME/$file`"
+      log_debug "`ls -al /data/$CAM_NAME/$file`"
     fi
 
-    echo "Deleting $file"
+    log_info "Deleting $file"
     curl $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file?del=1"
     rv=$?
-    echo -e Result was $rv
+    if [ $rv -ne 0 ]; then
+      log_error "Deleting video failed (error code $rv)"
+      exit 4
+    else
+      log_debug "Deleted OK"
+    fi
+  done 
 
 }
