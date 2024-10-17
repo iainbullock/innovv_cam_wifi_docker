@@ -39,12 +39,22 @@ function download() {
     quiet_args="--no-progress-meter"
   fi
 
+  log_info "Sending command to select playback mode"
+  curl $quiet_args "http://$CAM_IP/?custom=1&cmd=3001&par=2"
+  rv=$?
+  if [ $rv -ne 0 ]; then
+    log_error "Command failed (error code $rv)"
+    exit 1
+  else
+    log_debug "Command OK"
+  fi
+
   log_info "Downloading latest file list"
-  curl --output /data/$CAM_NAME/filelist $quiet_args "http://192.168.1.254/?custom=1&cmd=3015"
+  curl --output /data/$CAM_NAME/filelist $quiet_args "http://$CAM_IP/?custom=1&cmd=3015"
   rv=$?
   if [ $rv -ne 0 ]; then
     log_error "Downloading file list failed (error code $rv)"
-    exit 1
+    exit 2
   else
     log_debug "`ls -hl /data/$CAM_NAME/filelist`"
   fi
@@ -53,7 +63,7 @@ function download() {
   volume_name=`cat /data/$CAM_NAME/filelist | grep -m 1 '<FPATH>A:' | cut -d '\' -f 2`
   if [ ${#volume_name} -eq 0 ]; then
     log_error "Invalid SD card volume name: $volume_name"
-    exit 2
+    exit 3
   else
     log_debug "SD Card volume name: $volume_name"
   fi
@@ -66,7 +76,7 @@ function download() {
     if [ $rv -ne 0 ]; then
       log_error "Downloading video failed (error code $rv)"
       rm -f /data/$CAM_NAME/$file
-      exit 3
+      exit 4
     else
       log_debug "`ls -hl /data/$CAM_NAME/$file`"
     fi
@@ -76,7 +86,7 @@ function download() {
     rv=$?
     if [ $rv -ne 0 ]; then
       log_error "Deleting video failed (error code $rv)"
-      exit 4
+      exit 5
     else
       log_debug "Deleted OK"
     fi
