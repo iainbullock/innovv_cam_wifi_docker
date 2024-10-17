@@ -23,12 +23,10 @@ function setup_wifi() {
   log_info "Listen for and then connect to wifi: 
   `wpa_supplicant -B -i $WLAN_INTERFACE -c /config/wpa_supplicant.conf`"
 
-  # Set IP address for wifi connection to device
+  # Set static IP address for wifi connection to device
   log_info "Setting IP address to $WLAN_IP... \
-  `ip address flush dev $WLAN_INTERFACE && \
-   ip address flush route $WLAN_INTERFACE && \
-   ip address add $WLAN_IP/24 brd + dev wlp2s0 && \
-   ip route add $CAM_IP dev $WLAN_INTERFACE`"  
+  `ip address flush dev $WLAN_INTERFACE;  \
+  ip address add $WLAN_IP/24 brd + dev $WLAN_INTERFACE`"  
 
   # Placeholder to setup firewall rules to allow routing to camera device
   # Routing doesn't seem possible, maybe the camera won't allow connections from outside its subnet?
