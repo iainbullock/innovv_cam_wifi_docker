@@ -13,7 +13,11 @@ log_info "Listing wireless interfaces:
 [ -n "$WLAN_CONNECT" ] && setup_wifi
 
 # Create folder for camera files
-[ -d /config/$CAM_NAME ] || mkdir /config/$CAM_NAME
+if [ -d /data/$CAM_NAME ]; then
+  mkdir /data/$CAM_NAME
+  mkdir /data/$CAM_NAME/Protected
+  mkdir /data/$CAM_NAME/Video
+fi
 
 # Start main program loop
 log_info "Entering main loop..."

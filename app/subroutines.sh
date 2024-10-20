@@ -71,18 +71,18 @@ function download() {
   log_info "Searching for protected videos"
   cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\Protected' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
     log_info "Downloading protected video: $file"
-    curl --output /data/$CAM_NAME/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
+    curl --output /data/$CAM_NAME/Protected/$file $quiet_args "http://$CAM_IP/$volume_name/Protected/$file"
     rv=$?
     if [ $rv -ne 0 ]; then
       log_error "Downloading failed (error code $rv)"
       rm -f /data/$CAM_NAME/$file
       exit 4
     else
-      log_debug "`ls -hl /data/$CAM_NAME/$file`"
+      log_debug "`ls -hl /data/$CAM_NAME/Protected/$file`"
     fi
 
     log_info "Deleting $file"
-    curl $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file?del=1"
+    curl $quiet_args "http://$CAM_IP/$volume_name/Protected/$file?del=1"
     rv=$?
     if [ $rv -ne 0 ]; then
       log_error "Deleting failed (error code $rv)"
@@ -95,14 +95,14 @@ function download() {
   log_info "Searching for standard videos"
   cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\VIDEO' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
     log_info "Downloading video: $file"
-    curl --output /data/$CAM_NAME/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
+    curl --output /data/$CAM_NAME/Video/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
     rv=$?
     if [ $rv -ne 0 ]; then
       log_error "Downloading failed (error code $rv)"
-      rm -f /data/$CAM_NAME/$file
+      rm -f /data/$CAM_NAME/Video/$file
       exit 4
     else
-      log_debug "`ls -hl /data/$CAM_NAME/$file`"
+      log_debug "`ls -hl /data/$CAM_NAME/Video$file`"
     fi
 
     log_info "Deleting $file"
