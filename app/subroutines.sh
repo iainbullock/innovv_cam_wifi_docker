@@ -107,9 +107,9 @@ function download() {
      
      # Subfolders for videos named according to date
      dateDir=${file:0:8}
-     mkdir -p /data/$CAM_NAME/video/dateDir
+     mkdir -p /data/$CAM_NAME/Video/dateDir
 
-     if [ -f /data/$CAM_NAME/video/dateDir/$file ]; then
+     if [ -f /data/$CAM_NAME/Video/dateDir/$file ]; then
       log_info "Video file $file already downloaded"
       break
     fi

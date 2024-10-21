@@ -14,9 +14,9 @@ log_info "Listing wireless interfaces:
 
 # Create folder for camera files
 if [ -d /data/$CAM_NAME ]; then
-  mkdir /data/$CAM_NAME
-  mkdir /data/$CAM_NAME/Protected
-  mkdir /data/$CAM_NAME/Video
+  mkdir -p /data/$CAM_NAME
+  mkdir -p /data/$CAM_NAME/Protected
+  mkdir -p /data/$CAM_NAME/Video
 fi
 
 # Start main program loop
