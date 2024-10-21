@@ -71,20 +71,24 @@ function download() {
   log_info "Searching for protected videos"
   cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\Protected' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
     
-    if [ -f /data/$CAM_NAME/Protected/$file ]; then
+    # Subfolders for videos named according to date
+    dateDir=${file:0:8}
+    mkdir -p /data/$CAM_NAME/Protected/dateDir
+
+    if [ -f /data/$CAM_NAME/Protected/dateDir/$file ]; then
       log_info "Protected video file $file already downloaded"
       break
     fi
 
     log_info "Downloading protected video: $file"
-    curl --output /data/$CAM_NAME/Protected/$file $quiet_args "http://$CAM_IP/$volume_name/Protected/$file"
+    curl --output /data/$CAM_NAME/Protected/dateDir/$file $quiet_args "http://$CAM_IP/$volume_name/Protected/$file"
     rv=$?
     if [ $rv -ne 0 ]; then
       log_error "Downloading failed (error code $rv)"
-      rm -f /data/$CAM_NAME/$file
+      rm -f /data/$CAM_NAME/Protected/dateDir/$file
       exit 4
     else
-      log_debug "`ls -hl /data/$CAM_NAME/Protected/$file`"
+      log_debug "`ls -hl /data/$CAM_NAME/Protected/dateDir/$file`"
     fi
 
     log_info "Deleting $file"
@@ -100,21 +104,25 @@ function download() {
 
   log_info "Searching for standard videos"
   cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\VIDEO' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
-    
-     if [ -f /data/$CAM_NAME/video/$file ]; then
+     
+     # Subfolders for videos named according to date
+     dateDir=${file:0:8}
+     mkdir -p /data/$CAM_NAME/video/dateDir
+
+     if [ -f /data/$CAM_NAME/video/dateDir/$file ]; then
       log_info "Video file $file already downloaded"
       break
     fi
 
     log_info "Downloading video: $file"
-    curl --output /data/$CAM_NAME/Video/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
+    curl --output /data/$CAM_NAME/Video/dateDir/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
     rv=$?
     if [ $rv -ne 0 ]; then
       log_error "Downloading failed (error code $rv)"
-      rm -f /data/$CAM_NAME/Video/$file
+      rm -f /data/$CAM_NAME/Video/dateDir/$file
       exit 4
     else
-      log_debug "`ls -hl /data/$CAM_NAME/Video$file`"
+      log_debug "`ls -hl /data/$CAM_NAME/Video/dateDir/$file`"
     fi
 
     log_info "Deleting $file"
