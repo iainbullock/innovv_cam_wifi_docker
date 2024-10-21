@@ -70,6 +70,12 @@ function download() {
 
   log_info "Searching for protected videos"
   cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\Protected' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
+    
+    if [ -f /data/$CAM_NAME/Protected/$file ]; then
+      log_info "Protected video file $file already downloaded"
+      break
+    fi
+
     log_info "Downloading protected video: $file"
     curl --output /data/$CAM_NAME/Protected/$file $quiet_args "http://$CAM_IP/$volume_name/Protected/$file"
     rv=$?
@@ -94,6 +100,12 @@ function download() {
 
   log_info "Searching for standard videos"
   cat /data/$CAM_NAME/filelist | grep '<FPATH>A:\\'$volume_name'\\VIDEO' | cut -d '\' -f 4 | cut -d '<' -f 1 | while read -r file; do
+    
+     if [ -f /data/$CAM_NAME/video/$file ]; then
+      log_info "Video file $file already downloaded"
+      break
+    fi
+
     log_info "Downloading video: $file"
     curl --output /data/$CAM_NAME/Video/$file $quiet_args "http://$CAM_IP/$volume_name/VIDEO/$file"
     rv=$?
